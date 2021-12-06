@@ -2,9 +2,19 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, ScrollView, Dimensions, ActivityIndicator } from 'react-native';
 import * as Location from 'expo-location';
+import { Fontisto } from '@expo/vector-icons';
 
 const {width: DEVICE_WIDTH} = Dimensions.get('window');
 const API_KEY = 'API_KEY';
+const icons = {
+  'Clear': 'day-sunny',
+  'Clouds': 'cloudy',
+  'Rain': 'rains',
+  'Snow': 'snow',
+  'Atmosphere': 'cloudy-gusts',
+  'Drizzle': 'rain',
+  'Thunderstorm': 'lightning',
+}
 
 export default function App() {
 
@@ -43,13 +53,16 @@ export default function App() {
          horizontal pagingEnabled showsHorizontalScrollIndicator={false}
          contentContainerStyle={styles.weather}>
         {days.length === 0 ? 
-          (<View style={styles.day}>
+          (<View style={styles.days}>
             <ActivityIndicator color="white"/>
           </View>) : 
           (days.map((day, idx) => (
-            <View key={idx} style={styles.day}>
-              <Text style={styles.temp}>{parseFloat(day.temp.day).toFixed(1)}</Text>
-              <Text style={styles.description}>{day.weather[0].main}</Text>
+            <View key={idx} style={styles.days}>
+              <View style={styles.day}>
+                <Text style={styles.temp}>{parseFloat(day.temp.day).toFixed(1)}</Text>
+                <Text style={styles.description}>{day.weather[0].main}</Text>
+              </View>
+              <Fontisto style={styles.icon} name={icons[day.weather[0].main]}/>
             </View>
           )))
         }
@@ -79,14 +92,24 @@ const styles = StyleSheet.create({
   },
   weather: {
   },
-  day: {
+  days: {
     flex: 1,
     width: DEVICE_WIDTH,
-    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  day: {
+    flexDirection: 'column',
   },
   temp: {
     fontSize: 140,
     fontWeight: '800',
+  },
+  icon: {
+    marginTop: 40,
+    marginLeft: 10,
+    fontSize: 130,
+    color:'black',
   },
   description: {
     marginTop: -30,
