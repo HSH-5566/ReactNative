@@ -1,5 +1,10 @@
 export const color= {
     bg: 'black',
-    gray: 'gray',
-    white: 'white',
+    btn: 'gray',
+    btnClick: 'white',
+    input: 'white',
+    inputText: 'black',
+    list: 'gray',
+    listText: 'white',
+    icon: 'white',
 }
